@@ -77,9 +77,30 @@ public class GuestbookRepositoryTests {
         // Predicate와 Pageable을 인자로 받을 수 있다.
         Page<Guestbook> result = guestbookRepository.findAll(builder, pageable);
 
-        result.stream().forEach(guestbook -> {
-            System.out.println(guestbook);
-        });
+        result.stream().forEach(System.out::println);
+
+    }
+
+    @Test
+    public void testQuery2() {
+
+        Pageable pageable = PageRequest.of(0, 10, Sort.by("gno").descending());
+
+        QGuestbook qGuestbook = QGuestbook.guestbook;
+
+        BooleanBuilder builder = new BooleanBuilder();
+
+        String keyword = "1";
+        BooleanExpression exGno = qGuestbook.gno.gt(0L),
+                exTitle = qGuestbook.title.contains(keyword),
+                exContent = qGuestbook.content.contains(keyword);
+        BooleanExpression exTitleOrContent = exTitle.or(exContent);
+
+        builder.and(exGno).and(exTitleOrContent);
+
+        Page<Guestbook> result = guestbookRepository.findAll(builder, pageable);
+
+        result.stream().forEach(System.out::println);
 
     }
 
