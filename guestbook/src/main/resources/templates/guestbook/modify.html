@@ -5,7 +5,10 @@
     <th:block th:fragment="content">
         <h1 class="mt-4">Guestbook Modify Page</h1>
 
-        <form th:action="@{/guestbook/register}" th:method="post">
+        <form action="/guestbook/modify" method="post">
+            <!-- 페이지 번호 -->
+            <!-- <input type="hidden" id="page" th:value="${requestDTO.page}" /> -->
+
             <div class="form-group">
                 <label>#</label>
                 <input type="text" class="form-control" id="gno" name="gno" th:value="${dto.gno}" readonly />
@@ -39,7 +42,11 @@
             </div>
 
             <input type="button" class="btn btn-primary modifyBtn" value="Modify" />
-            <input type="button" class="btn btn-info listBtn" value="List" />
+
+            <a th:href="@{/guestbook/list(page=${requestDTO.page})}">
+                <input type="button" class="btn btn-info listBtn" value="List" />
+            </a>
+
             <input type="button" class="btn btn-danger removeBtn" value="Remove" />
         </form>
 
@@ -59,7 +66,14 @@
                 form.submit();
             };
 
+            // const listHandler = () => {
+            //     form.action = '/guestbook/list';
+            //     form.method = 'get';
+            //     form.submit();
+            // }
+
             buttons['modify'].addEventListener('click', modifyHandler);
+            // buttons['list'].addEventListener('click', listHandler);
         </script>
     </th:block>
 </th:block>
