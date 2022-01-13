@@ -8,6 +8,10 @@
         <form action="/guestbook/modify" method="post">
             <!-- 페이지 번호 -->
             <input type="hidden" name="page" th:value="${requestDTO.page}" />
+            <!-- 검색 타입 -->
+            <input type="hidden" name="type" th:value="${requestDTO.type}" />
+            <!-- 검색 키워드 -->
+            <input type="hidden" name="keyword" th:value="${requestDTO.keyword}" />
 
             <div class="form-group">
                 <label>#</label>
