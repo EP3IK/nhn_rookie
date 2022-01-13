@@ -28,7 +28,9 @@
             </thead>
             <tbody>
                 <tr th:each="dto : ${result.dtoList}">
-                    <th scope="row">[[${dto.gno}]]</th>
+                    <th scope="row">
+                        <a th:href="@{/guestbook/read(gno=${dto.gno}, page=${result.page})}">[[${dto.gno}]]</a>
+                    </th>
                     <td>[[${dto.title}]]</td>
                     <td>[[${dto.writer}]]</td>
                     <td>[[${#temporals.format(dto.regDate, 'yyyy/MM/dd')}]]</td>
@@ -43,8 +45,7 @@
                 </a>
             </li>
 
-            <li th:each="page : ${result.pageList}"
-                th:class="'page-item' + ${result.page == page ? ' active' : ''}">
+            <li th:each="page : ${result.pageList}" th:class="'page-item' + ${result.page == page ? ' active' : ''}">
                 <a class="page-link" th:href="@{/guestbook/list(page=${page})}">
                     [[${page}]]
                 </a>
@@ -81,7 +82,7 @@
         </div>
 
         <script th:inline="javascript">
-            const msg = [[${msg}]];
+            const msg = [[${ msg }]];
             console.log(msg);
             if (msg) $('.modal').modal();
         </script>
