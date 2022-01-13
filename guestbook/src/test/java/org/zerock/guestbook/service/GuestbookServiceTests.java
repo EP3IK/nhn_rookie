@@ -48,4 +48,22 @@ public class GuestbookServiceTests {
         pageResultDTO.getPageList().forEach(System.out::println);
         System.out.println("----- 페이지 목록 끝 -----");
     }
+
+    @Test
+    public void testModify() {
+        Long testGno = 305L;
+        GuestbookDTO dto = GuestbookDTO.builder()
+                .gno(testGno)
+                .title("testModifyTitle")
+                .content("testModifyContent")
+                .build();
+
+        System.out.println("GuestbookDTO: " + dto);
+
+        System.out.println("Modifying...");
+        service.modify(dto);
+
+        GuestbookDTO modifiedDto = service.read(testGno);
+        System.out.println("GuestbookDTO: " + modifiedDto);
+    }
 }
