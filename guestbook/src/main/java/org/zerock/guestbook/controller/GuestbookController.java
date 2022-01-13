@@ -20,7 +20,7 @@ import org.zerock.guestbook.service.GuestbookService;
 public class GuestbookController {
     private final GuestbookService service;
 
-    @GetMapping("/")
+    @GetMapping({"/", ""})
     public String index() {
         return "redirect:/guestbook/list";
     }
@@ -67,8 +67,8 @@ public class GuestbookController {
 
         service.modify(dto);
 
-        redirectAttributes.addFlashAttribute("page", requestDTO.getPage());
-        redirectAttributes.addFlashAttribute("gno", dto.getGno());
+        redirectAttributes.addAttribute("page", requestDTO.getPage());
+        redirectAttributes.addAttribute("gno", dto.getGno());
 
         return "redirect:/guestbook/read";
     }

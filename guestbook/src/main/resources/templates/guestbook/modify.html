@@ -3,7 +3,7 @@
 
 <th:block th:replace="~{/layout/basic::setContent(~{this::content})}">
     <th:block th:fragment="content">
-        <h1 class="mt-4">Guestbook Read Page</h1>
+        <h1 class="mt-4">Guestbook Modify Page</h1>
 
         <form th:action="@{/guestbook/register}" th:method="post">
             <div class="form-group">
@@ -42,6 +42,25 @@
             <input type="button" class="btn btn-info listBtn" value="List" />
             <input type="button" class="btn btn-danger removeBtn" value="Remove" />
         </form>
+
+        <script th:inline="javascript">
+            const form = document.querySelector('form');
+            const buttons = {};
+            ['modify', 'list', 'remove'].forEach((key) => {
+                buttons[key] = document.querySelector(`.${key}Btn`);
+            });
+
+            const modifyHandler = () => {
+                if (!confirm('수정하시겠습니까?')) return;
+
+                form.action = '/guestbook/modify';
+                form.method = 'post';
+
+                form.submit();
+            };
+
+            buttons['modify'].addEventListener('click', modifyHandler);
+        </script>
     </th:block>
 </th:block>
 
