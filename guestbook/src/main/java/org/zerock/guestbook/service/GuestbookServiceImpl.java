@@ -74,4 +74,10 @@ public class GuestbookServiceImpl implements GuestbookService {
             guestbookRepository.save(entity);
         }
     }
+
+    @Override
+    public void remove(Long gno) {
+        // deleteById 는 알아서 어련히 select 문부터 시작하고 있는지 없는지 체크부터 한다
+        guestbookRepository.deleteById(gno);
+    }
 }
