@@ -1,5 +1,6 @@
 package org.zerock.guestbook.service;
 
+import com.querydsl.core.BooleanBuilder;
 import org.zerock.guestbook.dto.GuestbookDTO;
 import org.zerock.guestbook.dto.PageRequestDTO;
 import org.zerock.guestbook.dto.PageResultDTO;
@@ -37,4 +38,6 @@ public interface GuestbookService {
     void modify(GuestbookDTO dto);
 
     void remove(Long gno);
+
+    BooleanBuilder getSearch(PageRequestDTO requestDTO);
 }
