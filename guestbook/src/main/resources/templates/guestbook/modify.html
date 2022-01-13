@@ -7,7 +7,7 @@
 
         <form action="/guestbook/modify" method="post">
             <!-- 페이지 번호 -->
-            <!-- <input type="hidden" id="page" th:value="${requestDTO.page}" /> -->
+            <input type="hidden" name="page" th:value="${requestDTO.page}" />
 
             <div class="form-group">
                 <label>#</label>
@@ -26,26 +26,24 @@
 
             <div class="form-group">
                 <label>글쓴이</label>
-                <input type="text" class="form-control" id="writer" th:value="${dto.writer}" readonly />
+                <input type="text" class="form-control" th:value="${dto.writer}" readonly />
             </div>
 
             <div class="form-group">
                 <label>등록일</label>
-                <input type="text" class="form-control" id="regDate"
-                    th:value="${#temporals.format(dto.regDate, 'yyyy/MM/dd')}" readonly />
+                <input type="text" class="form-control" th:value="${#temporals.format(dto.regDate, 'yyyy/MM/dd')}"
+                    readonly />
             </div>
 
             <div class="form-group">
                 <label>수정일</label>
-                <input type="text" class="form-control" id="modDate"
-                    th:value="${#temporals.format(dto.modDate, 'yyyy/MM/dd')}" readonly />
+                <input type="text" class="form-control" th:value="${#temporals.format(dto.modDate, 'yyyy/MM/dd')}"
+                    readonly />
             </div>
 
             <input type="button" class="btn btn-primary modifyBtn" value="Modify" />
 
-            <a th:href="@{/guestbook/list(page=${requestDTO.page})}">
-                <input type="button" class="btn btn-info listBtn" value="List" />
-            </a>
+            <input type="button" class="btn btn-info listBtn" value="List" />
 
             <input type="button" class="btn btn-danger removeBtn" value="Remove" />
         </form>
@@ -66,14 +64,29 @@
                 form.submit();
             };
 
-            // const listHandler = () => {
-            //     form.action = '/guestbook/list';
-            //     form.method = 'get';
-            //     form.submit();
-            // }
+            const listHandler = () => {
+                form.action = '/guestbook/list';
+                form.method = 'get';
+
+                ['gno', 'title', 'content'].forEach((id) => {
+                    form.querySelector(`#${id}`).removeAttribute('name');
+                });
+
+                form.submit();
+            }
+
+            const removeHandler = () => {
+                if (!confirm('삭제하시겠습니까?')) return;
+
+                form.action = '/guestbook/remove';
+                form.method = 'post';
+
+                form.submit();
+            };
 
             buttons['modify'].addEventListener('click', modifyHandler);
-            // buttons['list'].addEventListener('click', listHandler);
+            buttons['list'].addEventListener('click', listHandler);
+            buttons['remove'].addEventListener('click', removeHandler);
         </script>
     </th:block>
 </th:block>
