@@ -1,5 +1,6 @@
 package org.zerock.guestbook.service;
 
+import com.querydsl.core.BooleanBuilder;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -76,5 +77,29 @@ public class GuestbookServiceTests {
 
         service.remove(gno);    // 없는 번호
         System.out.println("2. remove method done");
+    }
+
+    @Test
+    public void testSearch() {
+        PageRequestDTO pageRequestDTO = PageRequestDTO.builder()
+                .page(1)
+                .size(10)
+                .type("t")
+                .keyword("12")
+                .build();
+
+        PageResultDTO<GuestbookDTO, Guestbook> pageResultDTO = service.getList(pageRequestDTO);
+
+        System.out.println("prev: " + pageResultDTO.isPrev());
+        System.out.println("next: " + pageResultDTO.isNext());
+        System.out.println("total page: " + pageResultDTO.getTotalPage());
+
+        System.out.println("----- guestbook DTO 시작 -----");
+        pageResultDTO.getDtoList().forEach(System.out::println);
+        System.out.println("----- guestbook DTO 끝 -----");
+
+        System.out.println("----- 페이지 목록 시작 -----");
+        pageResultDTO.getPageList().forEach(System.out::println);
+        System.out.println("----- 페이지 목록 끝 -----");
     }
 }
