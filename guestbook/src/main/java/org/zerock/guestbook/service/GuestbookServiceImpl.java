@@ -77,7 +77,14 @@ public class GuestbookServiceImpl implements GuestbookService {
 
     @Override
     public void remove(Long gno) {
-        // deleteById 는 알아서 어련히 select 문부터 시작하고 있는지 없는지 체크부터 한다
-        guestbookRepository.deleteById(gno);
+        // deleteById 는 알아서 어련히 select 문부터 시작하고 있는지 없는지 체크해주지 않는다!
+        // 없는 gno 집어넣으면 에러
+//        guestbookRepository.deleteById(gno);
+
+        // 없는 gno 집어넣을 가능성이 있으면 아래의 코드 적용
+        Optional<Guestbook> result = guestbookRepository.findById(gno);
+        if (result.isPresent()) {
+            guestbookRepository.deleteById(gno);
+        }
     }
 }

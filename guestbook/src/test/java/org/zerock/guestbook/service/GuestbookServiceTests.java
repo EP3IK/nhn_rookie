@@ -66,4 +66,15 @@ public class GuestbookServiceTests {
         GuestbookDTO modifiedDto = service.read(testGno);
         System.out.println("GuestbookDTO: " + modifiedDto);
     }
+
+    @Test
+    public void testRemove() {
+        Long gno = 304L;    // 있는 번호
+        service.remove(gno);
+        System.out.println("1. remove method done");
+        System.out.println("1. remove " + (service.read(gno) == null ? "success" : "fail"));
+
+        service.remove(gno);    // 없는 번호
+        System.out.println("2. remove method done");
+    }
 }
