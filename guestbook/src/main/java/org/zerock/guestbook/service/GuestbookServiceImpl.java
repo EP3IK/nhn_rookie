@@ -8,8 +8,11 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.zerock.guestbook.dto.GuestbookDTO;
 import org.zerock.guestbook.dto.PageRequestDTO;
+import org.zerock.guestbook.dto.PageResultDTO;
 import org.zerock.guestbook.entity.Guestbook;
 import org.zerock.guestbook.repository.GuestbookRepository;
+
+import java.util.function.Function;
 
 @Service
 @Log4j2
@@ -35,11 +38,13 @@ public class GuestbookServiceImpl implements GuestbookService {
     }
 
     @Override
-    public Page<Guestbook> getList(PageRequestDTO pageRequestDTO) {
+    public PageResultDTO<GuestbookDTO, Guestbook> getList(PageRequestDTO pageRequestDTO) {
         Pageable pageable = pageRequestDTO.getPageable(Sort.by("gno").descending());
 
         Page<Guestbook> result = guestbookRepository.findAll(pageable);
 
-        return result;
+        Function<Guestbook, GuestbookDTO> fn = entity -> entityToDto(entity);
+
+        return new PageResultDTO<>(result, fn);
     }
 }
