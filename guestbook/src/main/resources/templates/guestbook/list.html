@@ -110,6 +110,17 @@
             const msg = [[${ msg }]];
             console.log(msg);
             if (msg) $('.modal').modal();
+
+            const searchForm = document.querySelector('form#searchForm');
+            searchForm.querySelector('.btn-search').addEventListener('click', () => {
+                searchForm.submit();
+            });
+            searchForm.querySelector('.btn-clear').addEventListener('click', () => {
+                ['page', 'type', 'keyword'].forEach((name) => {
+                    searchForm.querySelector(`[name=${name}]`).removeAttribute('name');
+                });
+                searchForm.submit();
+            });
         </script>
     </th:block>
 
